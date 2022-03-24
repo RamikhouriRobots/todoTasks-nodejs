@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+  <title>Todo App</title>
+  <link rel="stylesheet" href="/static/stylesheets/style.css" type="text/css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    crossorigin="anonymous"
+  />
+</head>
+<body>
+  <div class="todo-container">
+    <h2>Task Description</h2>
+    <div class="todo">
+      <form action="/" method="POST" class="todo-header">
+        <input type="text" required name="content" />
+        <button type="submit">Add Task</button>
+      </form>
+      <ul class="todo-list">
+        <% todoTasks.forEach(details => { %>
+        <li class="todo-list-item">
+          <div class="todo-list-item-name"><p><strong>Description : </strong><%= details.content %></p>
+            <p><span><strong>Type: </strong><%= details.type %></span></p>
+            <p><strong>Date : </strong><%= details.date %></p>
+          </div>
+          <a href="/edit/<%= details._id %>" class="edit">
+            <span class="fas fa-edit"></span>
+          </a>
+          <a href="/remove/<%= details._id %>" class="remove">
+            <span class="fas fa-times"></span>
+          </a>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+</body>
