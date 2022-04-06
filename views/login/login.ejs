@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Todo App</title>
+    <link rel="stylesheet" href="/static/stylesheets/style.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="todo-container" style="width: 420px;">
+        <h2>Login</h2>
+        <div class="todo" style="width: 380px;">
+            <form action="/login" method="POST" class="todo-header">
+                <input type="text" placeholder="Enter your email address" required name="email" style="margin-bottom: 10px;" />
+                <input type="text" placeholder="Password" required name="password" style="margin-bottom: 10px;" />
+                <button type="submit">login</button>
+            </form>
+        </div>
+    </div>
+</body>

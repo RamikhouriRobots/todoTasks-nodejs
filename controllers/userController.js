@@ -4,15 +4,19 @@ const cipher = require('../shared/helper');
 const getUUID = require('../shared/helper')
 const decipher = require('../shared/helper');
 const auth = require("../middleware/auth");
-const { request } = require('express');
-const { response } = require('express');
 
 
-function generateToken(user) {
-    return jwToken.sign({ user_id: user.userId, email: user.email },
-        process.env.TOKEN_KEY, {
-            expireIn: "3h"
-        });
+function loadLogin(request, response) {
+    response.render("../views/login/login.ejs", { user: { emai: '', password: '' } })
+}
+
+function loadRegisterUser(request, response) {
+    response.render("../views/login/register.ejs", { user: { emai: '', password: '' } })
+}
+
+function generateToken(id, email) {
+    return jwToken.sign({ user_id: id, email: email },
+        process.env.TOKEN_KEY, {});
 }
 
 async function registerUser(request, response) {
@@ -37,13 +41,13 @@ async function registerUser(request, response) {
             firstName,
             lastName,
             email: email.toLowerCase(),
-            password: encryptedPassword
+            password: encryptedPassword,
+            token: generateToken(this.userId, email)
         });
 
-        // generate a jwt token
 
-        newUser.token = generateToken(newUser);
-        return response.status(201).json(newUser);
+
+        response.render("../views/login/login.ejs", { user: { emai: '', password: '' } });
 
     } catch (err) {
         console.log(err);
@@ -63,7 +67,7 @@ async function userLogin(request, response) {
         const user = await User.findOne({ email });
         const encryptedPassword = cipher('GENERIC KEY', password);
         if (user && user.password === encryptedPassword) {
-            user.token = generateToken(newUser);
+            user.token = generateToken(newUser.userId, newUser.email);
             return response.status(200).json(user);
         }
         return response.status(400).send("Invalid Credentials");
@@ -73,14 +77,20 @@ async function userLogin(request, response) {
 }
 
 module.exports = function(app) {
+    // register new user
+    app.post("/create", registerUser)
+
     // register user
-    app.post("/register", registerUser)
+    app.get("/register", loadRegisterUser)
 
     // user login
     app.post("/login", userLogin)
 
+    // user login
+    app.get("/login", loadLogin)
+
     // user auth
     app.post("/auth", auth, (request, response) => {
         response.status(200).send("User is authenticated");
-    })
+    });
 }
