@@ -56,7 +56,7 @@ function updateTemplate(request, response) {
     Template.findByIdAndUpdate(
         templateId, { templateId: request.body.templateId },
         (error) => {
-            return error ? response.send(500, error) : response.statusCode(200).send('Updated');
+            return error ? response.send(500, error) : response.status(200).send('Updated');
         }
     );
 }
@@ -70,16 +70,16 @@ function removeTemplate(request, response) {
 
 
 module.exports = function(app) {
-    // Add new task
+    // Add new template
     app.post("/template/add/", addTemplate);
-    // Get all tasks from MongoDB
+    // Get all template from MongoDB
     app.get("/templates/", getTemplates);
-    // Edit task
+    // Edit template
     app
         .route("/template/edit/:id")
         .get(getTemplateById)
         .post(updateTemplate);
 
-    // delete task
+    // delete template
     app.route("/template/remove/:id").get(removeTemplate);
 };

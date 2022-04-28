@@ -7,6 +7,9 @@ const taskSchema = new mongoose.Schema({
         type: String,
         default: getUUID()
     },
+    completed:{
+        type: Boolean
+    },
     content: {
         type: String,
         required: true

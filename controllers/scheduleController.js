@@ -70,7 +70,7 @@ function updateSchedule(request, response) {
     Schedule.findByIdAndUpdate(
         scheduleId, { scheduleId: request.body.scheduleId },
         (error) => {
-            return error ? response.send(500, error) : response.statusCode(200).send('Updated');
+            return error ? response.send(500, error) : response.status(200).send('Updated');
         }
     );
 }

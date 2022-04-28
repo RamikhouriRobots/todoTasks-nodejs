@@ -15,9 +15,6 @@ const uri = `${process.env.DB_SERVER}://${process.env.DB_USER}:${encodeURICompon
 module.exports = function (app) {
   mongoose.connect(uri, options, () => {
     console.log("connect to db!");
-    app.listen(process.env.PORT || 3000, () =>
-      console.log("server up and running")
-    );
   });
 };
 

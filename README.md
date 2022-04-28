@@ -27,7 +27,7 @@ npm install
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) and take a look around.
+Open [http://localhost:3003](http://localhost:3003) and take a look around.
 
 
 ## Steps to run test

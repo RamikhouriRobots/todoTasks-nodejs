@@ -41,7 +41,7 @@ async function registerUser(request, response) {
             firstName,
             lastName,
             email: email.toLowerCase(),
-            password: encryptedPassword,
+            password: password,
             token: generateToken(this.userId, email)
         });
 
@@ -63,11 +63,13 @@ async function userLogin(request, response) {
         if (!(email && password)) {
             response.status(400).send("Enter your username and password");
         }
-
+console.log(email, password);
         const user = await User.findOne({ email });
-        const encryptedPassword = cipher('GENERIC KEY', password);
-        if (user && user.password === encryptedPassword) {
-            user.token = generateToken(newUser.userId, newUser.email);
+        console.log('find one', user);
+        //const encryptedPassword = cipher('GENERIC KEY', password);
+        //console.log('encrypted', encryptedPassword);
+        if (user && user.password === password) {
+            user.token = generateToken(user.userId, user.email);
             return response.status(200).json(user);
         }
         return response.status(400).send("Invalid Credentials");
