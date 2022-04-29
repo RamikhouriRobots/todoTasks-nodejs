@@ -1,8 +1,7 @@
 const jwToken = require('jsonwebtoken');
 const User = require('../models/user');
-const cipher = require('../shared/helper');
 const getUUID = require('../shared/helper')
-const decipher = require('../shared/helper');
+const CryptoJS = require("crypto-js");
 const auth = require("../middleware/auth");
 
 
@@ -34,14 +33,14 @@ async function registerUser(request, response) {
         }
 
         // encrypt the password
-        const encryptedPassword = cipher('GENERIC KEY', password);
+        const encryptedPassword = CryptoJS.AES.encrypt(password, 'GENERIC-KEY').toString();
 
         const newUser = await User.create({
             userId: getUUID(),
             firstName,
             lastName,
             email: email.toLowerCase(),
-            password: password,
+            password: encryptedPassword,
             token: generateToken(this.userId, email)
         });
 
@@ -63,12 +62,9 @@ async function userLogin(request, response) {
         if (!(email && password)) {
             response.status(400).send("Enter your username and password");
         }
-console.log(email, password);
         const user = await User.findOne({ email });
-        console.log('find one', user);
-        //const encryptedPassword = cipher('GENERIC KEY', password);
-        //console.log('encrypted', encryptedPassword);
-        if (user && user.password === password) {
+        const passwordDecrypt = CryptoJS.AES.decrypt(user.password, 'GENERIC-KEY');
+        if (user && passwordDecrypt.toString(CryptoJS.enc.Utf8) === password) {
             user.token = generateToken(user.userId, user.email);
             return response.status(200).json(user);
         }
