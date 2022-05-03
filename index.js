@@ -2,6 +2,10 @@ const express = require("express");
 
 const cors = require("cors");
 
+const swaggerUi = require("swagger-ui-express"),swaggerDocument = require("./swagger.json");
+
+
+
 const app = express();
 
 app.use(cors());
@@ -39,6 +43,8 @@ require("./controllers/scheduleController")(app);
 app.use("/static", express.static("public"));
 
 app.set("view engine", "ejs");
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(process.env.PORT || 3003, () =>
 console.log("server up and running")

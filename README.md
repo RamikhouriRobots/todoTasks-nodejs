@@ -29,8 +29,9 @@ npm start
 
 Open [http://localhost:3003](http://localhost:3003) and take a look around.
 
+Open [http://localhost:3003](http://localhost:3003/api-docs) and take a look on apis definitions.
 
-## Steps to run test
+## Steps to run tests
 
 ```bash
 npm test
