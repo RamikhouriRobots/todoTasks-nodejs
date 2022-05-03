@@ -27,10 +27,40 @@
                 "summary": "Get all tasks in system",
                 "responses":{
                     "200": {
-                        "description":"Ok"
+                        "description":"Ok",
+                        "schema": "#/definitions/Tasks"
                     }
                 }
             }
         }
+    },
+    "definitions":{
+       "Task":{
+          "required":["taskId", "_id", "content"],
+          "properties":{
+              "_id":{
+                  "type":"integer",
+                  "uniqueItems": true
+              },
+              "taskId":{
+                  "type":"string"
+              },
+              "content":{
+                  "type": "string"
+              },
+              "date":{
+                  "type": "string",
+                  "format":"date-time"
+              },
+              "type":{
+                  "type":"string"
+              }
+               
+          }
+       },
+       "Tasks":{
+           "type": "array",
+           "$ref": "#/definitions/Task"
+       }         
     }
 }
