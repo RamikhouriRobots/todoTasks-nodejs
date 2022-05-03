@@ -19,3 +19,11 @@ services:
      - PORT=$PORT
      - TWILIO_ACCOUNT_SID=$TWILIO_ACCOUNT_SID
      - TWILIO_AUTH_TOKEN=$TWILIO_AUTH_TOKEN
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    networks:
+      - app-network
+    command: ./home/node/app/node_modules/.bin/nodemon index.js
