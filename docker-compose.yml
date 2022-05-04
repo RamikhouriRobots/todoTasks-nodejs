@@ -1,29 +1,25 @@
-version: '0.0.0.1'
+version: '3'
 services:
-  nodejs:
+  todo:
     build: 
       context: .
       dockerfile: Dockerfile
-    image: nodejs
-    container_name: nodejs
+    image: todo-task
+    container_name: todo-task
     restart: unless-stopped
     env_file: .env
     environment:
-     - DB_USER=$DB_USER
-     - DB_USER_PASSWORD=$DB_USER_PASSWORD
-     - DB_SERVER=$DB_NAME
-     - DB_CLASTER=$DB_CLASTER
-     - DB_NAME=$DB_NAME
-     - TOKEN_KEY=$TOKEN_KEY
-     - SENDGRID_API_KEY=$SENDGRID_API_KEY
-     - PORT=$PORT
-     - TWILIO_ACCOUNT_SID=$TWILIO_ACCOUNT_SID
-     - TWILIO_AUTH_TOKEN=$TWILIO_AUTH_TOKEN
+     - DB_USER=${DB_USER}
+     - DB_USER_PASSWORD=${DB_USER_PASSWORD}
+     - DB_SERVER=${DB_NAME}
+     - DB_CLASTER=${DB_CLASTER}
+     - DB_NAME=${DB_NAME}
+     - TOKEN_KEY=${TOKEN_KEY}
+     - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+     - PORT=${PORT}
+     - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+     - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
     ports:
-      - "3000:3000"
-    volumes:
-      - .:/home/node/app
-      - node_modules:/home/node/app/node_modules
-    networks:
-      - app-network
-    command: ./home/node/app/node_modules/.bin/nodemon index.js
+      - "80:8080"
+
+    command: node index.js
