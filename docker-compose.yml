@@ -5,21 +5,15 @@ services:
       context: .
       dockerfile: Dockerfile
     image: todo-task
+    cap_add:
+      - NET_ADMIN
     container_name: todo-task
     restart: unless-stopped
-    env_file: .env
-    environment:
-     - DB_USER=${DB_USER}
-     - DB_USER_PASSWORD=${DB_USER_PASSWORD}
-     - DB_SERVER=${DB_NAME}
-     - DB_CLASTER=${DB_CLASTER}
-     - DB_NAME=${DB_NAME}
-     - TOKEN_KEY=${TOKEN_KEY}
-     - SENDGRID_API_KEY=${SENDGRID_API_KEY}
-     - PORT=${PORT}
-     - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
-     - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+
+
     ports:
       - "3003:3003"
-
-    command: node index.js
+    volumes:
+      - .:/node/app
+  
+    command: npm run start
