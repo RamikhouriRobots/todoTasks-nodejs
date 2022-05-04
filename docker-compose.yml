@@ -20,6 +20,6 @@ services:
      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
     ports:
-      - "80:8080"
+      - "3003:3003"
 
     command: node index.js

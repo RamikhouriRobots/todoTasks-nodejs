@@ -1,7 +1,11 @@
-FROM node:14-alpine
+FROM node:12-alpine
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-WORKDIR /home/node/app
+RUN mkdir -p /node/app/
+WORKDIR /node/app
+
+RUN adduser -S app
+
+COPY . .
 
 ENV DB_USER=mongoUser
 ENV DB_USER_PASSWORD=User@451973
@@ -16,13 +20,12 @@ ENV TWILIO_AUTH_TOKEN=6585f823c6e72c1a041ac32430d4cee6
 
 
 COPY package*.json ./
-
-USER node
-
 RUN npm install
+RUN chown -R app /node/app
 
-COPY --chown=node:node . .
+USER app
 
-EXPOSE 8080
 
-CMD ["node", "index.js"]
+EXPOSE 3003
+
+CMD ["npm", "run", "start"]
